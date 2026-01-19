@@ -1,19 +1,23 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="MediatR" Version="12.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Jobs.Application\Jobs.Application.csproj" />
     <ProjectReference Include="..\Jobs.Core\Jobs.Core.csproj" />
     <ProjectReference Include="..\Jobs.Infrastructure\Jobs.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Queries\GetProjects\" />
+    <Folder Include="Queries\GetProjectById\" />
   </ItemGroup>
 
 </Project>
