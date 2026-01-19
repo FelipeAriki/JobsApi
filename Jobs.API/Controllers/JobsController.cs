@@ -1,6 +1,8 @@
 ﻿using Jobs.Application.Commands.CreateJob;
 using Jobs.Application.Commands.DeleteJob;
 using Jobs.Application.Commands.UpdateJob;
+using Jobs.Application.Queries.GetJobById;
+using Jobs.Application.Queries.GetProjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,13 +22,17 @@ namespace Jobs.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetJobs()
         {
-            return Ok();
+            var result = await _mediator.Send(new GetJobsQuery());
+            if (!result.IsSuccess) return BadRequest(result);
+            return Ok(result);
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetJobById(int id)
         {
-            return Ok(id);
+            var result = await _mediator.Send(new GetJobByIdQuery(id));
+            if (!result.IsSuccess) return BadRequest(result);
+            return Ok(result);
         }
 
         [HttpPost]

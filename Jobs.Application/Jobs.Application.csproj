@@ -15,9 +15,4 @@
     <ProjectReference Include="..\Jobs.Infrastructure\Jobs.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Queries\GetProjects\" />
-    <Folder Include="Queries\GetProjectById\" />
-  </ItemGroup>
-
 </Project>
