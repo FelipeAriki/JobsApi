@@ -16,23 +16,23 @@ public class JobRepository : IJobRepository
     public async Task<IEnumerable<Job>> GetJobsAsync()
     {
         using var connection = _dbContext.CreateConnection();
-        var sql = "SELECT Id, Title, Description, Location, Salary FROM Job(NOLOCK)";
+        var sql = "SELECT id, title, description, location, salary FROM Job(NOLOCK)";
         return await connection.QueryAsync<Job>(sql);
     }
 
     public async Task<Job?> GetJobByIdAsync(int id)
     {
         using var connection = _dbContext.CreateConnection();
-        var sql = "SELECT Id, Title, Description, Location, Salary FROM Job(NOLOCK) WHERE id = @Id";
-        return await connection.QueryFirstOrDefaultAsync<Job>(sql, new { Id = id });
+        var sql = "SELECT id, title, description, location, salary FROM Job(NOLOCK) WHERE id = @Id";
+        return await connection.QueryFirstOrDefaultAsync<Job?>(sql, new { Id = id });
     }
 
     public async Task<int> CreateJobAsync(Job job)
     {
         using var connection = _dbContext.CreateConnection();
-        var sql = @"INSERT INTO Job(Title, Description, Location, Salary)
+        var sql = @"INSERT INTO Job(title, description, location, salary)
                     OUTPUT INSERTED.Id
-                    VALUES(@Title, @Description, @Location, @Salary)";
+                    VALUES(@title, @description, @location, @salary)";
         return await connection.QuerySingleAsync<int>(sql, job);
     }
 
@@ -40,10 +40,10 @@ public class JobRepository : IJobRepository
     {
         using var connection = _dbContext.CreateConnection();
         var sql = @"UPDATE Job SET
-                        Title = @Title,
-                        Description = @Description,
-                        Location = @Location,
-                        Salary = @Salary
+                        title = @Title,
+                        description = @Description,
+                        location = @Location,
+                        salary = @Salary
                     WHERE id = @Id";
         await connection.ExecuteAsync(sql, job);
     }

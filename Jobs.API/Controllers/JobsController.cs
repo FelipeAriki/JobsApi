@@ -4,12 +4,14 @@ using Jobs.Application.Commands.UpdateJob;
 using Jobs.Application.Queries.GetJobById;
 using Jobs.Application.Queries.GetProjects;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Jobs.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class JobsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -36,6 +38,7 @@ namespace Jobs.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateJob(CreateJobCommand command)
         {
             var result = await _mediator.Send(command);
@@ -44,6 +47,7 @@ namespace Jobs.API.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateJob(UpdateJobCommand command)
         {
             var result = await _mediator.Send(command);
@@ -52,6 +56,7 @@ namespace Jobs.API.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteJob(DeleteJobCommand command)
         {
             var result = await _mediator.Send(command);
