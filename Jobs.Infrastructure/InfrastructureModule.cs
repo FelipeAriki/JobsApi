@@ -1,11 +1,13 @@
 ﻿using Jobs.Core.Repositories;
 using Jobs.Infrastructure.Auth;
+using Jobs.Infrastructure.Notifications;
 using Jobs.Infrastructure.Persistence;
 using Jobs.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using SendGrid.Extensions.DependencyInjection;
 using System.Text;
 
 namespace Jobs.Infrastructure;
@@ -17,7 +19,8 @@ public static class InfrastructureModule
         return services
             .AddDbContext()
             .AddRepositories()
-            .AddAuth(configuration);
+            .AddAuth(configuration)
+            .AddEmailService(configuration);
     }
 
     private static IServiceCollection AddDbContext(this IServiceCollection services)
@@ -56,6 +59,17 @@ public static class InfrastructureModule
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
                 };
             });
+
+        return services;
+    }
+
+    private static IServiceCollection AddEmailService(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddScoped<IEmailService, EmailService>();
+        services.AddSendGrid(o =>
+        {
+            o.ApiKey = configuration.GetValue<string>("SendGrid:ApiKey");
+        });
 
         return services;
     }
