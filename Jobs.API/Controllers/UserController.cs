@@ -1,6 +1,9 @@
 ﻿using Jobs.Application.Commands.User.CreateUser;
 using Jobs.Application.Commands.User.DeleteUser;
 using Jobs.Application.Commands.User.LoginUser;
+using Jobs.Application.Commands.User.Password.ChangePassword;
+using Jobs.Application.Commands.User.Password.PasswordRecovery;
+using Jobs.Application.Commands.User.Password.ValidateRecoveryCode;
 using Jobs.Application.Commands.User.UpdateUser;
 using Jobs.Application.Queries.User.GetUserById;
 using Jobs.Application.Queries.User.GetUsers;
@@ -78,7 +81,7 @@ namespace Jobs.API.Controllers
             return Ok(token);
         }
 
-        /*[HttpPost("password-recovery/request")]
+        [HttpPost("password-recovery/request")]
         [AllowAnonymous]
         public async Task<IActionResult> RequestPasswordRecovery(PasswordRecoveryCommand command)
         {
@@ -103,6 +106,6 @@ namespace Jobs.API.Controllers
             var result = await _mediator.Send(command);
             if (!result.IsSuccess) return BadRequest(result.Message);
             return Ok(result);
-        }*/
+        }
     }
 }

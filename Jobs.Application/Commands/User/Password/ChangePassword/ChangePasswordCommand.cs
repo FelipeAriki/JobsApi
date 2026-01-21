@@ -1,0 +1,11 @@
+﻿using Jobs.Application.ViewModel;
+using MediatR;
+
+namespace Jobs.Application.Commands.User.Password.ChangePassword;
+
+public class ChangePasswordCommand : IRequest<ResultViewModel>
+{
+    public string Email { get; set; }
+    public string Code { get; set; }
+    public string NewPassword { get; set; }
+}

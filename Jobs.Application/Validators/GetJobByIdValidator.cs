@@ -10,7 +10,6 @@ public class GetJobByIdValidator : AbstractValidator<GetJobByIdQuery>
         RuleFor(j => j.Id)
             .NotEmpty()
             .NotNull()
-            .GreaterThan(0)
-            .WithMessage("Id inválido");
+            .GreaterThan(0);
     }
 }
