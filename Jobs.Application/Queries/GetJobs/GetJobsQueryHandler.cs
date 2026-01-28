@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Jobs.Application.Queries.GetJobs;
 
-public class GetJobsQueryHandler : IRequestHandler<GetJobsQuery, ResultViewModel<IEnumerable<Job>>>
+public class GetJobsQueryHandler : IRequestHandler<GetJobsQuery, ResultViewModel<IEnumerable<JobViewModel>>>
 {
     private readonly IJobRepository _repository;
 
@@ -15,9 +15,9 @@ public class GetJobsQueryHandler : IRequestHandler<GetJobsQuery, ResultViewModel
         _repository = repository;
     }
 
-    public async Task<ResultViewModel<IEnumerable<Job>>> Handle(GetJobsQuery request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<IEnumerable<JobViewModel>>> Handle(GetJobsQuery request, CancellationToken cancellationToken)
     {
         var jobs = await _repository.GetJobsAsync();
-        return new ResultViewModel<IEnumerable<Job>>(jobs);
+        return new ResultViewModel<IEnumerable<JobViewModel>>(jobs.Select(JobViewModel.FromEntity).ToList());
     }
 }

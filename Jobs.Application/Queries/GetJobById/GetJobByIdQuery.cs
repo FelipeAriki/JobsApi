@@ -1,10 +1,9 @@
 ﻿using Jobs.Application.ViewModel;
-using Jobs.Core.Entities;
 using MediatR;
 
 namespace Jobs.Application.Queries.GetJobById;
 
-public class GetJobByIdQuery : IRequest<ResultViewModel<Job>>
+public class GetJobByIdQuery : IRequest<ResultViewModel<JobViewModel>>
 {
     public int Id { get; set; }
 

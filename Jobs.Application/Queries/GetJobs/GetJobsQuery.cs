@@ -4,6 +4,6 @@ using MediatR;
 
 namespace Jobs.Application.Queries.GetProjects;
 
-public class GetJobsQuery : IRequest<ResultViewModel<IEnumerable<Job>>>
+public class GetJobsQuery : IRequest<ResultViewModel<IEnumerable<JobViewModel>>>
 {
 }

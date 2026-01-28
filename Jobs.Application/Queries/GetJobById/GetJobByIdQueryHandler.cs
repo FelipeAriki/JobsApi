@@ -1,10 +1,9 @@
 ﻿using Jobs.Application.ViewModel;
-using Jobs.Core.Entities;
 using Jobs.Core.Repositories;
 using MediatR;
 
 namespace Jobs.Application.Queries.GetJobById;
-public class GetJobByIdQueryHandler : IRequestHandler<GetJobByIdQuery, ResultViewModel<Job>>
+public class GetJobByIdQueryHandler : IRequestHandler<GetJobByIdQuery, ResultViewModel<JobViewModel>>
 {
     private readonly IJobRepository _repository;
 
@@ -13,11 +12,11 @@ public class GetJobByIdQueryHandler : IRequestHandler<GetJobByIdQuery, ResultVie
         _repository = repository;
     }
 
-    public async Task<ResultViewModel<Job>> Handle(GetJobByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ResultViewModel<JobViewModel>> Handle(GetJobByIdQuery request, CancellationToken cancellationToken)
     {
         var job = await _repository.GetJobByIdAsync(request.Id);
-        if (job == null) return ResultViewModel<Job>.Error("Oops...emprego não cadastrado.");
+        if (job == null) return ResultViewModel<JobViewModel>.Error("Oops...emprego não cadastrado.");
 
-        return ResultViewModel<Job>.Success(job);
+        return ResultViewModel<JobViewModel>.Success(JobViewModel.FromEntity(job));
     }
 }
